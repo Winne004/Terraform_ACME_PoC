@@ -1,0 +1,6 @@
+terraform.tfstate.backup
+.terraform/providers/registry.terraform.io/hashicorp/azuread/2.11.0/windows_amd64/terraform-provider-azuread_v2.11.0_x5.exe
+.terraform/providers/registry.terraform.io/hashicorp/azurerm/2.87.0/windows_amd64/terraform-provider-azurerm_v2.87.0_x5.exe
+terraform.tfstate
+.terraform.lock.hcl
+spn.tfvars

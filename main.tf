@@ -42,7 +42,7 @@ resource "azurerm_dns_zone" "ACME-public" {
 
 # Create the key vault 
 resource "azurerm_key_vault" "ACME" {
-  name                        = "ACMEKeyVaultJezV2"
+  name                        = "ACMEKeyVaultJezV3"
   location                    = "westeurope"
   resource_group_name         = azurerm_resource_group.acme.name
   enabled_for_disk_encryption = true
@@ -75,12 +75,12 @@ resource "azurerm_storage_container" "poshacme" {
 
 # Create Az AD Application, Service Principal (SPN), and SPN password
 resource "azuread_application" "ACME_Certificate_Automation" {
-  display_name    = "ACME Certificate Automation"
-  }
+  display_name = "ACME Certificate Automation"
+}
 
 resource "azuread_service_principal" "ACME_Certificate_Automation" {
   application_id = azuread_application.ACME_Certificate_Automation.application_id
-  tags = ["test"]
+  tags           = ["test"]
 }
 
 resource "azuread_service_principal_password" "ACME_Certificate_Automation" {
@@ -114,7 +114,7 @@ resource "azurerm_role_assignment" "SPN_granted_GetPermissionsToCertificates" {
 resource "azurerm_role_assignment" "SPN_granted_GetPermissionsToSecrets" {
   scope                = azurerm_key_vault.ACME.id
   role_definition_name = "Key Vault Secrets Officer"
-  principal_id         = var.client_id
+  principal_id         = var.object_id
 }
 # Generate SAS token 
 data "azurerm_storage_account_blob_container_sas" "acmecertsjez_SASToken" {
@@ -143,6 +143,6 @@ resource "azurerm_key_vault_secret" "SAS_Key" {
   key_vault_id = azurerm_key_vault.ACME.id
 
   depends_on = [azurerm_role_assignment.SPN_granted_GetPermissionsToSecrets
-    
+
   ]
 }

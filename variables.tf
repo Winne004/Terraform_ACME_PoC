@@ -19,4 +19,9 @@ variable "client_secret" {
 variable "tenant_id" {
   type        = string
   description = "Your Azure Tenant ID"
-} 
+}
+
+variable "object_id" {
+  type        = string
+  description = "Your SPN ID - if using"
+}
